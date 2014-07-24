@@ -18,3 +18,14 @@ Step 3
 ------
 In a single pass (one instruction), I subset the requested columns as dataframe[,myCols], *cbind()* them with subject and activity dataset, and then *rbind()* the two datasets. This operation is not made in the same order as in the assigment descriptions (point 1 and 2 are in reverse order) but I think is equivalent and more efficient as are merged two smaller subsets.
 
+Step 4
+------
+Column names are reassigned. I chose to avoid an external lookup table or a hand-made list, and do it programmatically simply removing conflictual/reserved words that would interfere with the final step. Else, why have a CodeBook?
+
+Step 5
+------
+Value for the activities are recoded with a for loop, (if I had not misunderstood point 4 in the assigment specs).
+
+Step 6
+------
+The tidy dataset is generated and written, using the *summaryBy()* function of the *doBy* package. I made this choice after seeing a suggestion of a TA in the forum and some googling around.

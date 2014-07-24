@@ -27,3 +27,26 @@ flush.console()
 ## merge selected columns of train and test data 
 final<-rbind(cbind(sTrain,yTrain,xTrain[,myCols]),cbind(sTest,yTest,xTest[,myCols]))
 
+## reassign column names
+print("making some cosmetic work...")
+flush.console()
+colnames(final) <- c("subject", "activity", gsub("\\(\\)", "",myColNames))
+colnames(final)<-gsub("\\-std\\-", "StDev", gsub("\\-mean\\-", "Mean",colnames(final)))
+colnames(final)<-gsub("\\-std", "StDev", gsub("\\-mean", "Mean",colnames(final)))
+
+## substitutes tables for activities
+## I intended that for "Uses descriptive activity names to name the activities in the data set"
+actLk=data.frame(V3=c("Walk", "UpStairs", "DownStairs", "Sit", "Stand", "Lay"))
+for (i in 1:6 ) {
+  final$activity[final$activity==i] <- as.character(actLk[i,1])
+}
+
+# create and write the tidy data set
+# I saved as tidy.csv.txt to upload the csv disguised as txt on coursera
+# obviously to read it you should use read.csv()
+#
+print("generate tidy dataset as tidy.csv.txt")
+flush.console()
+library(doBy)
+write.csv((summaryBy(.~activity+subject, data=final,FUN=mean, keep.names=TRUE)),"tidy.csv.txt")
+print("Done!")
